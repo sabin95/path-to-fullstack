@@ -1,0 +1,13 @@
+version: "3"
+services:
+  coder:
+    build: ./env
+    ports:
+     - "8080:8080" # Coder
+     - "5000:5000" # ASP.NET Core HTTP
+     - "5001:5001" # ASP.NET Core HTTPS
+     - "4200:4200" # Angular
+    volumes:
+     - .:/home/coder/project
+    environment: 
+     - PASSWORD=castor

@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "env"
+		},
+		{
+			"path": "be"
+		},
+		{
+			"path": "fe"
+		}
+	],
+	"settings": {}
+}
