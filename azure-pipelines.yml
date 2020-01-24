@@ -9,13 +9,27 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '3.x'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: 'be/be.csproj'
-    
+jobs:
+- job: BE
+  steps:
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '3.x'
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'build'
+      projects: 'be/be.csproj'
+
+- job: FE
+  steps:
+  - task: Npm@1
+    inputs:
+      command: 'install'
+      workingDir: 'fe/'
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      workingDir: 'fe/'
+      customCommand: 'run build'
+
