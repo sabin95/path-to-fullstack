@@ -13,10 +13,12 @@ jobs:
 - job: BE
   steps:
   - task: UseDotNet@2
+    displayName: 'install dotnet core 3.x'
     inputs:
       packageType: 'sdk'
       version: '3.x'
   - task: DotNetCoreCLI@2
+    displayName: 'dotnet build'
     inputs:
       command: 'build'
       projects: 'be/be.csproj'
@@ -24,10 +26,12 @@ jobs:
 - job: FE
   steps:
   - task: Npm@1
+    displayName: 'npm install'
     inputs:
       command: 'install'
       workingDir: 'fe/'
   - task: Npm@1
+    displayName: 'npm build'
     inputs:
       command: 'custom'
       workingDir: 'fe/'
