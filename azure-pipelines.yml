@@ -24,6 +24,7 @@ jobs:
       projects: 'be/be.csproj'
       arguments: '-o $(Build.ArtifactStagingDirectory)'
   - task: PublishBuildArtifacts@1
+    displayName: 'publish build artifacts'
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'BE'
@@ -43,8 +44,9 @@ jobs:
       workingDir: 'fe/'
       customCommand: 'run build'
   - task: PublishBuildArtifacts@1
+    displayName: 'publish build artifacts'
     inputs:
-      PathtoPublish: 'fe/dist/'
+      PathtoPublish: 'fe/dist/fe'
       ArtifactName: 'FE'
       publishLocation: 'Container'
 
