@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace be
+namespace BE
 {
     public class Program
     {
@@ -20,9 +20,7 @@ namespace be
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder
-                        .UseUrls("http://0.0.0.0:5000")
-                        .UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }

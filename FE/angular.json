@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "fe": {
+    "FE": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/fe",
+            "outputPath": "dist/FE",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -67,18 +67,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "fe:build"
+            "browserTarget": "FE:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "fe:build:production"
+              "browserTarget": "FE:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fe:build"
+            "browserTarget": "FE:build"
           }
         },
         "test": {
@@ -115,15 +115,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "fe:serve"
+            "devServerTarget": "FE:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "fe:serve:production"
+              "devServerTarget": "FE:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "fe"
+  "defaultProject": "FE"
 }
