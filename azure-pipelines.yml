@@ -21,7 +21,7 @@ jobs:
     displayName: 'dotnet build'
     inputs:
       command: 'build'
-      projects: 'be/be.csproj'
+      projects: 'BE/BE.csproj'
       arguments: '-o $(Build.ArtifactStagingDirectory)'
   - task: PublishBuildArtifacts@1
     displayName: 'publish build artifacts'
@@ -36,17 +36,17 @@ jobs:
     displayName: 'npm install'
     inputs:
       command: 'install'
-      workingDir: 'fe/'
+      workingDir: 'FE/'
   - task: Npm@1
     displayName: 'npm build'
     inputs:
       command: 'custom'
-      workingDir: 'fe/'
+      workingDir: 'FE/'
       customCommand: 'run build'
   - task: PublishBuildArtifacts@1
     displayName: 'publish build artifacts'
     inputs:
-      PathtoPublish: 'fe/dist/fe'
+      PathtoPublish: 'FE/dist/FE'
       ArtifactName: 'FE'
       publishLocation: 'Container'
 
