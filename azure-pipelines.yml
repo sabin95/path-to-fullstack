@@ -1,0 +1,52 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+jobs:
+- job: BE
+  steps:
+  - task: UseDotNet@2
+    displayName: 'install dotnet core 3.x'
+    inputs:
+      packageType: 'sdk'
+      version: '3.x'
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet build'
+    inputs:
+      command: 'build'
+      projects: 'be/be.csproj'
+      arguments: '-o $(Build.ArtifactStagingDirectory)'
+  - task: PublishBuildArtifacts@1
+    displayName: 'publish build artifacts'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'BE'
+      publishLocation: 'Container'
+
+- job: FE
+  steps:
+  - task: Npm@1
+    displayName: 'npm install'
+    inputs:
+      command: 'install'
+      workingDir: 'fe/'
+  - task: Npm@1
+    displayName: 'npm build'
+    inputs:
+      command: 'custom'
+      workingDir: 'fe/'
+      customCommand: 'run build'
+  - task: PublishBuildArtifacts@1
+    displayName: 'publish build artifacts'
+    inputs:
+      PathtoPublish: 'fe/dist/fe'
+      ArtifactName: 'FE'
+      publishLocation: 'Container'
+
