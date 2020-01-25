@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace be
+namespace BE
 {
     public class Startup
     {
@@ -32,7 +32,7 @@ namespace be
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("salut la baieti!");
+                    await context.Response.WriteAsync("Hello World!");
                 });
             });
         }
