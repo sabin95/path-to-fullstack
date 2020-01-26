@@ -1,13 +1,25 @@
 {
 	"folders": [
 		{
-			"path": "env"
+			"path": "ENV"
 		},
 		{
-			"path": "be"
+			"path": "BE"
 		},
 		{
-			"path": "fe"
+			"path": "FE"
+		},
+		{
+			"path": "BE.BL"
+		},
+		{
+			"path": "BE.DAL"
+		},
+		{
+			"path": "BE.Queries"
+		},
+		{
+			"path": "Diagrams"
 		}
 	],
 	"settings": {}
