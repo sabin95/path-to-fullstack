@@ -1,13 +1,22 @@
-version: "3"
+version: "3.7"
+volumes:
+  sqldata:
 services:
-  coder:
+  devenv:
     build: ./env
+    command: /home/start.sh
     ports:
-     - "8080:8080" # Coder
-     - "5000:5000" # ASP.NET Core HTTP
-     - "5001:5001" # ASP.NET Core HTTPS
-     - "4200:4200" # Angular
+      - "5000:5000" # ASP.NET Core HTTP
+      - "5001:5001" # ASP.NET Core HTTPS
+      - "4200:4200" # Angular
     volumes:
-     - .:/home/coder/project
-    environment: 
-     - PASSWORD=castor
+      - .:/home/project
+  sqlserver:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldata:/var/opt/mssql
+    environment:
+        MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD}"
+        ACCEPT_EULA: "Y"
