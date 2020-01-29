@@ -6,16 +6,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BE
-{
+{  
     public class MyContext : DbContext
-    {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"");
+    {    
+        public MyContext (DbContextOptions<MyContext> dbContextOptions) :base(dbContextOptions)
+        {           
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MyClass>().HasNoKey();
@@ -24,43 +26,48 @@ namespace BE
 
     public class MyClass
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+                   
+        public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+      
         public void ConfigureServices(IServiceCollection services)
-        {
+        {    
+            services.AddDbContext<MyContext>(options =>
+                     options.UseSqlServer(Configuration.GetValue<string>("ConnectionString")));
+        
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+        {            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseRouting();
-
-            var stringBuilder = new StringBuilder();
-            using (var context = new MyContext())
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllers();
+            });
+            app.UseSwagger();
+            app.UseSwaggerUI(x=>
             {
-                var uspCallResults = context.Set<MyClass>().FromSqlRaw("EXEC dbo.Foo").ToList();
-                foreach (var result in uspCallResults)
-                {
-                    stringBuilder.AppendLine(result.Id.ToString());
-                }
-            }
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync(stringBuilder.ToString());
-                });
+                x.SwaggerEndpoint("/swagger/v1/swagger.json","My API V1");
             });
         }
     }
