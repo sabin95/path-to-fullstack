@@ -1,18 +1,18 @@
-using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using System.Text;
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Mvc;
+using BE.Queries.Revisions.GetAllRevisions;
+using BE.Queries.Revisions.GetRevisionById;
+using BE.BL.Revisions.Create;
+using BE.BL.Revisions.Edit;
 
 namespace BE
-{  
+{
     public class MyContext : DbContext
     {    
         public MyContext (DbContextOptions<MyContext> dbContextOptions) :base(dbContextOptions)
@@ -21,6 +21,10 @@ namespace BE
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MyClass>().HasNoKey();
+            modelBuilder.Entity<GetAllRevisionsResult>().HasNoKey();
+            modelBuilder.Entity<GetRevisionByIdResult>().HasNoKey();
+            modelBuilder.Entity<RevisionCreateCommand>().HasNoKey();
+            modelBuilder.Entity<RevisionEditByIdCommand>().HasNoKey();
         }
     }
 

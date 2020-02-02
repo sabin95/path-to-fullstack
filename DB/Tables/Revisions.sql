@@ -1,5 +1,5 @@
 CREATE TABLE dbo.Revisions
 (
-    Id                  UNIQUEIDENTIFIER PRIMARY KEY DEFAULT newsequentialid(),
+    Id                  BIGINT PRIMARY KEY,
     ProblemDetails      VARCHAR(255)
 )

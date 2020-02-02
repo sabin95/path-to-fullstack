@@ -1,22 +1,28 @@
 {
 	"folders": [
 		{
+			"name": "BE",
 			"path": "BE"
 		},
 		{
-			"path": "FE"
-		},
-		{
+			"name": "BE.BL",
 			"path": "BE.BL"
 		},
 		{
+			"name": "BE.DAL",
 			"path": "BE.DAL"
 		},
 		{
+			"name": "BE.Queries",
 			"path": "BE.Queries"
 		},
 		{
+			"name": "Diagrams",
 			"path": "Diagrams"
+		},
+		{
+			"name": "FE",
+			"path": "FE"
 		}
 	],
 	"settings": {}

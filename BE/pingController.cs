@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hunter.API.Controllers
+namespace BE.Controllers
 {
     [Route("api/[controller]")]
     public class PingController
