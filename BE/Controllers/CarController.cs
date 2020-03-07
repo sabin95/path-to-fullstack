@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using BE.BL.Car.Create;
-using BE.Queries.Car;
+using BE.BL.Cars.Create;
+using BE.Queries.Cars;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore;
 namespace BE.Controllers
 {
     [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
-    public class CarController
+    public class CarsController
     {
         private readonly MyContext _context;
-        public CarController(MyContext context)
+        public CarsController(MyContext context)
         {
             _context = context;
         }

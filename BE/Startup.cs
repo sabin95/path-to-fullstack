@@ -10,6 +10,10 @@ using BE.Queries.Revisions.GetAllRevisions;
 using BE.Queries.Revisions.GetRevisionById;
 using BE.BL.Revisions.Create;
 using BE.BL.Revisions.Edit;
+using BE.Queries.Cars;
+using BE.BL.Cars.Create;
+using BE.BL.Cars.Edit;
+using BE.Queries.Revisions.GetAllRevisionsByClientId;
 
 namespace BE
 {
@@ -22,9 +26,14 @@ namespace BE
         {
             modelBuilder.Entity<MyClass>().HasNoKey();
             modelBuilder.Entity<GetAllRevisionsResult>().HasNoKey();
+            modelBuilder.Entity<GetAllRevisionsByClientIdResult>().HasNoKey();
             modelBuilder.Entity<GetRevisionByIdResult>().HasNoKey();
             modelBuilder.Entity<RevisionCreateCommand>().HasNoKey();
             modelBuilder.Entity<RevisionEditByIdCommand>().HasNoKey();
+            modelBuilder.Entity<CarCreateCommand>().HasNoKey();
+            modelBuilder.Entity<CarEditByIdCommand>().HasNoKey();
+            modelBuilder.Entity<GetAllCarsByClientIdResult>().HasNoKey();
+            modelBuilder.Entity<GetCarByIdResult>().HasNoKey();
         }
     }
 

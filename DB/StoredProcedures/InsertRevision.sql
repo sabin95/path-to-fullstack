@@ -2,11 +2,11 @@ CREATE OR ALTER PROCEDURE usp_InsertRevision @ProblemDetails VARCHAR(255), @Clie
 BEGIN
     INSERT INTO [dbo].[Revisions]
     ( 
-     [Id], [ProblemDetails],[ClientId]
+     [Id], [ClientId],[ProblemDetails]
     )
     VALUES
     ( 
      (Select MAX(Id)
-     From [dbo].[Revisions]) + 1, @ProblemDetails , @ClientId
+     From [dbo].[Revisions]) + 1, @ClientId, @ProblemDetails
     )
 END

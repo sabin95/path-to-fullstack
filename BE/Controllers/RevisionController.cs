@@ -47,7 +47,7 @@ namespace BE.Controllers
         [HttpPost]
         public void AddRevision([FromBody] RevisionCreateCommand revisionCreateCommand)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertRevision] {0}", revisionCreateCommand.ProblemDetails);
+            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertRevision] {0}, {1}", revisionCreateCommand.ProblemDetails,revisionCreateCommand.ClientId);
         }
 
         [HttpPut("{revisionId}")]
