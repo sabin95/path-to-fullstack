@@ -37,7 +37,7 @@ namespace BE.Controllers
             return _context.Set<GetRevisionByIdResult>().FromSqlRaw("EXEC [dbo].[usp_GetRevisionById] {0}", revisionId).ToList().FirstOrDefault();            
         }
 
-        [HttpGet("{clientId}")]
+        [HttpGet("ClientId={clientId}")]
         public List<GetAllRevisionsByClientIdResult> GetAllRevisionsByClientId(long clientId)
         {
             
@@ -62,7 +62,7 @@ namespace BE.Controllers
             _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_DeleteRevisionById] {0}", revisionId);
         }
 
-        [HttpDelete("{clientId}")]
+        [HttpDelete("ClientId={clientId}")]
         public void DeleteRevisionsByClientId(long clientId)
         {
             _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_DeleteRevisionsByClientId] {0}", clientId);

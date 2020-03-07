@@ -17,7 +17,7 @@ namespace BE.Controllers
             _context = context;
         }
 
-        [HttpGet("{clientId}")]
+        [HttpGet("ClientId={clientId}")]
         public List<GetAllCarsByClientIdResult> GetAllCarsByClientId(int clientId)
         {
             return _context.Set<GetAllCarsByClientIdResult>().FromSqlRaw("EXEC [dbo].[usp_GetAllCarsByClientId] {0}",clientId).ToList();            
@@ -54,7 +54,7 @@ namespace BE.Controllers
             _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_DeleteCarById] {0}", carId);
         }
 
-        [HttpDelete("{clientId}")]
+        [HttpDelete("ClientId={clientId}")]
         public void DeleteCarByClientId(long clientId)
         {
             _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_DeleteCarByClientId] {0}", clientId);
