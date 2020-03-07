@@ -1,6 +1,6 @@
-namespace BE.Queries.Revisions.GetRevisionById
+namespace BE.Queries.Revisions.GetAllRevisionsByClientId
 {
-    public class GetRevisionByIdResult
+    public class GetAllRevisionsByClientIdResult
     {
         public long Id { get; set; }
         public int ClientId { get; set; }
