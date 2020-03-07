@@ -7,4 +7,5 @@ BEGIN
     [ModelName] = @ModelName,
     [PlateNumber] = @PlateNumber,
     [RegistrationId] = @RegistrationId
+    where Id=@Id
 END

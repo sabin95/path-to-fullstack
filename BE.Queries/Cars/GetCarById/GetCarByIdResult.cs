@@ -2,8 +2,8 @@ namespace BE.Queries.Cars
 {
     public class GetCarByIdResult
     {
-        public long CarId { get; set; }
-        public long UserId { get; set; }
+        public long Id { get; set; }
+        public long ClientId { get; set; }
         public string BrandName { get; set; }
         public string ModelName { get; set; }
         public string PlateNumber { get; set; }

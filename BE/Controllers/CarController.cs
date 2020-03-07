@@ -33,7 +33,7 @@ namespace BE.Controllers
         [HttpPost]
         public void AddCar([FromBody] CarCreateCommand carCreateCommand)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertCar] {1},{2},{3},{4},{5}", 
+            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertCar] {0},{1},{2},{3},{4}", 
                                                 carCreateCommand.ClientId,carCreateCommand.BrandName,
                                                 carCreateCommand.ModelName,carCreateCommand.PlateNumber,
                                                 carCreateCommand.RegistrationId);
@@ -42,7 +42,7 @@ namespace BE.Controllers
         [HttpPut("{carId}")]
         public void EditCar(long carId,[FromBody] CarCreateCommand carEditByIdCommand)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_UpdateCar] {1},{2},{3},{4},{5}", 
+            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_EditCarById] {0},{1},{2},{3},{4},{5}", carId,
                                                 carEditByIdCommand.ClientId,carEditByIdCommand.BrandName,
                                                 carEditByIdCommand.ModelName,carEditByIdCommand.PlateNumber,
                                                 carEditByIdCommand.RegistrationId);

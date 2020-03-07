@@ -26,34 +26,34 @@ namespace BE.Controllers
 
         [HttpGet]
         public List<GetAllRevisionsResult> GetAllRevision()
-        {            
-            return _context.Set<GetAllRevisionsResult>().FromSqlRaw("EXEC [dbo].[usp_GetAllRevisions]").ToList();            
+        {
+            return _context.Set<GetAllRevisionsResult>().FromSqlRaw("EXEC [dbo].[usp_GetAllRevisions]").ToList();
         }
 
         [HttpGet("{revisionId}")]
         public GetRevisionByIdResult GetRevisionById(long revisionId)
         {
-            
-            return _context.Set<GetRevisionByIdResult>().FromSqlRaw("EXEC [dbo].[usp_GetRevisionById] {0}", revisionId).ToList().FirstOrDefault();            
+
+            return _context.Set<GetRevisionByIdResult>().FromSqlRaw("EXEC [dbo].[usp_GetRevisionById] {0}", revisionId).ToList().FirstOrDefault();
         }
 
         [HttpGet("ClientId={clientId}")]
         public List<GetAllRevisionsByClientIdResult> GetAllRevisionsByClientId(long clientId)
         {
-            
-            return _context.Set<GetAllRevisionsByClientIdResult>().FromSqlRaw("EXEC [dbo].[usp_GetAllRevisionsByClientId] {0}", clientId).ToList();            
+
+            return _context.Set<GetAllRevisionsByClientIdResult>().FromSqlRaw("EXEC [dbo].[usp_GetAllRevisionsByClientId] {0}", clientId).ToList();
         }
 
         [HttpPost]
         public void AddRevision([FromBody] RevisionCreateCommand revisionCreateCommand)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertRevision] {0}, {1}", revisionCreateCommand.ProblemDetails,revisionCreateCommand.ClientId);
+            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertRevision] {0}, {1}", revisionCreateCommand.ProblemDetails, revisionCreateCommand.ClientId);
         }
 
         [HttpPut("{revisionId}")]
         public void EditRevision(long revisionId, [FromBody] RevisionEditByIdCommand revisionEditCommand)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_EditRevisionById] {0}, {1}", revisionId, revisionEditCommand.ProblemDetails);
+            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_EditRevisionById] {0}, {1}, {2}", revisionId, revisionEditCommand.ProblemDetails, revisionEditCommand.ClientId);
         }
 
         [HttpDelete("{revisionId}")]
