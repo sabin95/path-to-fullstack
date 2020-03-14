@@ -56,10 +56,10 @@ namespace BE.Controllers
                                                 carCreateCommand.RegistrationId);
         }
 
-        [HttpPost("{clientId}/{carId}/Revisions")]
-        public void AddRevision(long carId,long clientId,[FromBody] RevisionCreateCommand revisionCreateCommand)
+        [HttpPost("{clientId}/Revisions")]
+        public void AddRevision(long clientId,[FromBody] RevisionCreateCommand revisionCreateCommand)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertRevision] {0}, {1},{2}", revisionCreateCommand.ProblemDetails, carId, clientId);
+            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertRevision] {0}, {1},{2}", revisionCreateCommand.ProblemDetails, revisionCreateCommand.CarId, clientId);
         }
 
         #endregion
