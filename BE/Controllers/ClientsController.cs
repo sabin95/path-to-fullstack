@@ -47,7 +47,7 @@ namespace BE.Controllers
         #endregion
 
         #region Post
-        [HttpPost("{clientId}")]
+        [HttpPost("{clientId}/Cars")]
         public void AddCar(long clientId,[FromBody] CarCreateCommand carCreateCommand)
         {
             _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertCar] {0},{1},{2},{3},{4}", 
@@ -56,10 +56,10 @@ namespace BE.Controllers
                                                 carCreateCommand.RegistrationId);
         }
 
-        [HttpPost("{clientId}")]
-        public void AddRevision(long clientId,[FromBody] RevisionCreateCommand revisionCreateCommand)
+        [HttpPost("{clientId}/{carId}/Revisions")]
+        public void AddRevision(long carId,long clientId,[FromBody] RevisionCreateCommand revisionCreateCommand)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertRevision] {0}, {1}", revisionCreateCommand.ProblemDetails, revisionCreateCommand.CarId, clientId);
+            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertRevision] {0}, {1},{2}", revisionCreateCommand.ProblemDetails, carId, clientId);
         }
 
         #endregion

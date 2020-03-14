@@ -8,6 +8,6 @@ BEGIN
     VALUES
     ( 
      (Select MAX(Id)
-     From [dbo].[Car]) + 1, @ClientId,@BrandName,@ModelName,@PlateNumber,@RegistrationId
+     From [dbo].[Cars]) + 1, @ClientId,@BrandName,@ModelName,@PlateNumber,@RegistrationId
     )
 END
