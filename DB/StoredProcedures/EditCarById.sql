@@ -2,10 +2,9 @@ CREATE OR ALTER PROCEDURE usp_EditCarById @Id BIGINT, @ClientId BIGINT,@ModelNam
                                                         @PlateNumber VARCHAR(255), @RegistrationId VARCHAR(255) AS 
 BEGIN
     UPDATE [dbo].[car]     
-    SET [ClientId] = @ClientId,
-    [BrandName] = @BrandName,
+    SET [BrandName] = @BrandName,
     [ModelName] = @ModelName,
     [PlateNumber] = @PlateNumber,
     [RegistrationId] = @RegistrationId
-    where Id=@Id
+    where Id=@Id and ClientId=@ClientId
 END

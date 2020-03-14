@@ -55,6 +55,7 @@ namespace BE
       
         public void ConfigureServices(IServiceCollection services)
         {    
+            services.AddCors(c=>c.AddPolicy("myPolicy",b=>b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
             services.AddDbContext<MyContext>(options =>
                      options.UseSqlServer(Configuration.GetValue<string>("ConnectionString")));
         
@@ -63,6 +64,7 @@ namespace BE
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +75,7 @@ namespace BE
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("myPolicy");
             app.UseRouting();
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
@@ -82,6 +85,7 @@ namespace BE
             {
                 x.SwaggerEndpoint("/swagger/v1/swagger.json","My API V1");
             });
+            
         }
     }
 }
