@@ -2,9 +2,7 @@
     <form id="revisionForm">
         <label for="carsSelection">Select car</label><br>
         <select id="carsSelection" name="cars">
-            <option value="DaciaLuTacsuLuMihaiPeCareIncaNuOAm">DaciaLuTacsuLuMihaiPeCareIncaNuOAm</option>
-            <option value="Rabla">Rabla</option>
-            <option value="Bbr_maPis">Bbr_maPis</option>
+            <option *ngFor='let car of cars' [value]="car.id">{{car.brandName}} {{car.modelName}}</option>
         </select><br>
         <label for="problemDetails">Problem details:</label><br>
         <input type="text" id="problemDetails" name="problemDetails"><br><br>

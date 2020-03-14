@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {Car} from "./../Car";
 
 @Component({
   selector: 'app-revision',
@@ -6,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./revision.component.scss']
 })
 export class RevisionComponent implements OnInit {
-
-  constructor() { }
+  cars:Car
+  constructor(
+    public http:HttpClient
+  ) { }
   
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.cars = await this.http.get<Car>("http://localhost:5000/api/clients/1/cars").toPromise()
   }
 
 }
