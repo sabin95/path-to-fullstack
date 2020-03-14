@@ -1,6 +1,6 @@
 CREATE OR ALTER PROCEDURE usp_DeleteCarsByClientId @ClientId BIGINT AS
 BEGIN
     DELETE
-    FROM dbo.Car
+    FROM dbo.Cars
     WHERE ClientId=@ClientId
 END
