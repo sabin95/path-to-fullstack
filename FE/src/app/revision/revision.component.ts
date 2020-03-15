@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {GetCarResult} from "../Car/GetCarResult";
+import {GetCarResult} from "./GetCarResult";
 import { RevisionCreateCommand } from './RevisionCreateCommand';
 
 @Component({
