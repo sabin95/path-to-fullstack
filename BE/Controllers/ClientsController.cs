@@ -59,7 +59,7 @@ namespace BE.Controllers
         [HttpPost("{clientId}/Revisions")]
         public void AddRevision([FromRoute] long clientId,[FromBody] RevisionCreateCommand revisionCreateCommand)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertRevision] {0}, {1},{2}", revisionCreateCommand.ProblemDetails, revisionCreateCommand.CarId, clientId);
+            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertRevision] {0}, {1},{2},{3}", revisionCreateCommand.Title, revisionCreateCommand.ProblemDetails, revisionCreateCommand.CarId, clientId);
         }
 
         #endregion
@@ -77,7 +77,7 @@ namespace BE.Controllers
         [HttpPut("{clientId}/{revisionId}")]
         public void EditRevision(long clientId,long revisionId, [FromBody] RevisionEditByIdCommand revisionEditCommand)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_EditRevisionById] {0}, {1}, {2}", revisionId,clientId, revisionEditCommand.ProblemDetails);
+            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_EditRevisionById] {0}, {1}, {2},{3}", revisionId,clientId, revisionEditCommand.Title, revisionEditCommand.ProblemDetails);
         }
         #endregion
 
