@@ -6,18 +6,23 @@ import { AppComponent } from './app.component';
 import { RevisionComponent } from './revision/revision.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule }   from '@angular/forms';
-
+import { RevisionsListComponent } from './revisions-list/revisions-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     RevisionComponent,
-    AppComponent
+    AppComponent,
+    RevisionsListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
