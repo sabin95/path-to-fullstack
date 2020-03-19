@@ -12,6 +12,7 @@ export class RevisionComponent implements OnInit {
   cars:GetCarResult
   selectedCarId:number
   problemDetails:string
+  title:string
   
   
   constructor(
@@ -26,6 +27,7 @@ export class RevisionComponent implements OnInit {
     console.dir(this.selectedCarId);
     let revision = <RevisionCreateCommand> {
       carId:+this.selectedCarId,
+      title:this.title,
       problemDetails:this.problemDetails
     }
     await this.http.post("http://localhost:5000/api/clients/1/Revisions", revision).toPromise();

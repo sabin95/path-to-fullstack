@@ -1,19 +1,24 @@
 <div class="container">
-    <h1>Revision Form</h1>
-    
-      <div class="form-group">
-        <label for="carsSelection">Select car</label>
-        <select id="carsSelection" name="cars" [(ngModel)]="selectedCarId">
-            <option *ngFor='let car of cars' [value]="car.id">{{car.brandName}} {{car.modelName}}</option>
-        </select><br>
-      </div>
+  <h1>Revision Form</h1>
 
-      <div class="form-group">
-        <label for="problemDetails">Problem details:</label>
-        <input type="text" class="form-control" id="problemDetails" [(ngModel)]="problemDetails" required>
-      </div>
+  <div class="form-group">
+    <label for="carsSelection">Select car</label>
+    <select id="carsSelection" name="cars" [(ngModel)]="selectedCarId">
+      <option *ngFor='let car of cars' [value]="car.id">{{car.brandName}} {{car.modelName}}</option>
+    </select><br>
+  </div>
 
-      <button (click)="onSubmit()" class="btn btn-success">Submit</button>
+  <div class="form-group">
+    <label for="problemDetails">Title:</label>
+    <input type="text" class="form-control" id="title" [(ngModel)]="title" required>
+  </div>
 
-    
+  <div class="form-group">
+    <label for="problemDetails">Problem details:</label>
+    <input type="text" class="form-control" id="problemDetails" [(ngModel)]="problemDetails" required>
+  </div>
+
+  <button (click)="onSubmit()" class="btn btn-success">Submit</button>
+
+
 </div>
