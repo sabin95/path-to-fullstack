@@ -1,5 +1,5 @@
 export interface RevisionCreateCommand {
-    carId: number
-    title:string
-    problemDetails: string
+    carId: number;
+    title:string;
+    problemDetails: string;
 }

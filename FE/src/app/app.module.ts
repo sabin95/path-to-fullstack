@@ -9,12 +9,14 @@ import { FormsModule }   from '@angular/forms';
 import { RevisionsListComponent } from './revisions-list/revisions-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { CarInsertComponent } from './car-insert/car-insert.component';
 
 @NgModule({
   declarations: [
     RevisionComponent,
     AppComponent,
-    RevisionsListComponent
+    RevisionsListComponent,
+    CarInsertComponent
   ],
   imports: [
     BrowserModule,
