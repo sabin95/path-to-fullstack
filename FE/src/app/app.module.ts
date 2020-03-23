@@ -10,6 +10,7 @@ import { RevisionsListComponent } from './revisions-list/revisions-list.componen
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CarInsertComponent } from './car-insert/car-insert.component';
+import { APIService } from './APIServices';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { CarInsertComponent } from './car-insert/car-insert.component';
     BrowserAnimationsModule,
     NgbModule
   ],
-  providers: [],
+  providers: [APIService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

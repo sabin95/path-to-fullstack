@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GetRevisionResult } from './GetRevisionResult';
 import { HttpClient } from '@angular/common/http';
+import { APIService } from '../APIServices';
 
 @Component({
   selector: 'app-revisions-list',
@@ -10,11 +11,11 @@ import { HttpClient } from '@angular/common/http';
 export class RevisionsListComponent implements OnInit {
   revisions: GetRevisionResult
   constructor(
-    public http: HttpClient
+    public apiService: APIService
   ) { }
 
   async ngOnInit() {
-    this.revisions = await this.http.get<GetRevisionResult>("http://localhost:5000/api/clients/1/revisions").toPromise()
+    this.revisions= await this.apiService.getRevisionsList(1);
   }
 
 }

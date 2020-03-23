@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {GetCarResult} from "./GetCarResult";
-import { RevisionCreateCommand } from './RevisionCreateCommand';
+import { CreateRevisionCommand } from './CreateRevisionCommand';
+import { APIService } from '../APIServices';
 
 @Component({
   selector: 'app-revision',
@@ -16,21 +17,21 @@ export class RevisionComponent implements OnInit {
   
   
   constructor(
-    public http:HttpClient
+    public apiService:APIService
   ) { }
   
   async ngOnInit() {
-    this.cars = await this.http.get<GetCarResult>("http://localhost:5000/api/clients/1/cars").toPromise()
+      this.cars = await this.apiService.getCarsForClient(1);
   }
 
   async onSubmit() {
     console.dir(this.selectedCarId);
-    let revision = <RevisionCreateCommand> {
+    let revision = <CreateRevisionCommand> {
       carId:+this.selectedCarId,
       title:this.title,
       problemDetails:this.problemDetails
     }
-    await this.http.post("http://localhost:5000/api/clients/1/Revisions", revision).toPromise();
+    await this.apiService.createRevision(1,revision);
   }
 
 

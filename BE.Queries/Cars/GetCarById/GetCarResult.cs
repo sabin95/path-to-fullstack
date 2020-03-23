@@ -1,11 +1,9 @@
-namespace BE.Queries.Revisions.GetAllRevisionsByClientId
+namespace BE.Queries.Cars
 {
-    public class GetAllRevisionsByClientIdResult
+    public class GetCarResult
     {
         public long Id { get; set; }
         public long ClientId { get; set; }
-        public string Title { get; set; }
-        public string ProblemDetails { get; set; } 
         public string BrandName { get; set; }
         public string ModelName { get; set; }
         public string PlateNumber { get; set; }

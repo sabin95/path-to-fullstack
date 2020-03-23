@@ -1,6 +1,6 @@
 namespace BE.BL.Revisions.Edit
 {
-    public class RevisionEditByIdCommand
+    public class EditRevisionCommand
     {
         public string Title { get; set; }
         public string ProblemDetails { get; set; } 

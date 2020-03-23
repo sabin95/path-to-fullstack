@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CarCreateCommand } from './CarCreateCommand';
+import { CreateCarCommand } from './CreateCarCommand';
+import { APIService } from '../APIServices';
 
 @Component({
   selector: 'app-car-insert',
@@ -13,20 +14,20 @@ export class CarInsertComponent implements OnInit {
   plateNumber:string
   registrationId:string
   constructor(
-    public http:HttpClient
+    public apiService:APIService
   ) { }
 
   ngOnInit(): void {
   }
 
   async onSubmit() {
-    let car = <CarCreateCommand> {
+    let car = <CreateCarCommand> {
       brandName:this.brandName,
       modelName:this.modelName,
       plateNumber:this.plateNumber,
       registrationId:this.registrationId
     }
-    await this.http.post("http://localhost:5000/api/clients/1/Cars", car).toPromise();
+    await this.apiService.createCar(1,car);
   }
 
 }

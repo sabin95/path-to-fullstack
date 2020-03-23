@@ -1,10 +1,10 @@
-namespace BE.BL.Cars.Edit
+namespace BE.BL.Cars.Create
 {
-    public class CarEditByIdCommand
+    public class CreateCarCommand
     {
         public string BrandName { get; set; }
         public string ModelName { get; set; }
         public string PlateNumber { get; set; }
-        public string RegistrationId { get; set; }        
+        public string RegistrationId { get; set; }
     }
 }

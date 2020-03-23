@@ -5,5 +5,6 @@ CREATE  TABLE dbo.Cars
     BrandName           VARCHAR(255),
     ModelName           VARCHAR(255),
     PlateNumber           VARCHAR(255),
-    RegistrationId           VARCHAR(255)
+    RegistrationId           VARCHAR(255),
+    IsDeleted               BIT NOT NULL DEFAULT (0)
 )

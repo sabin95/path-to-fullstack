@@ -17,29 +17,19 @@ using BE.Queries.Revisions.GetAllRevisionsByClientId;
 
 namespace BE
 {
-    public class MyContext : DbContext
+    public class GetYourCarFixedDbContext : DbContext
     {    
-        public MyContext (DbContextOptions<MyContext> dbContextOptions) :base(dbContextOptions)
+        public GetYourCarFixedDbContext (DbContextOptions<GetYourCarFixedDbContext> dbContextOptions) :base(dbContextOptions)
         {           
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MyClass>().HasNoKey();
             modelBuilder.Entity<GetAllRevisionsResult>().HasNoKey();
-            modelBuilder.Entity<GetAllRevisionsByClientIdResult>().HasNoKey();
-            modelBuilder.Entity<GetRevisionByIdResult>().HasNoKey();
-            modelBuilder.Entity<RevisionCreateCommand>().HasNoKey();
-            modelBuilder.Entity<RevisionEditByIdCommand>().HasNoKey();
-            modelBuilder.Entity<CarCreateCommand>().HasNoKey();
-            modelBuilder.Entity<CarEditByIdCommand>().HasNoKey();
-            modelBuilder.Entity<GetAllCarsByClientIdResult>().HasNoKey();
-            modelBuilder.Entity<GetCarByIdResult>().HasNoKey();
+            modelBuilder.Entity<GetRevisionsForClientResult>().HasNoKey();
+            modelBuilder.Entity<GetRevisionResult>().HasNoKey();            
+            modelBuilder.Entity<GetAllCarsForClientResult>().HasNoKey();
+            modelBuilder.Entity<GetCarResult>().HasNoKey();
         }
-    }
-
-    public class MyClass
-    {
-        public Guid Id { get; set; }
     }
 
     public class Startup
@@ -56,7 +46,7 @@ namespace BE
         public void ConfigureServices(IServiceCollection services)
         {    
             services.AddCors(c=>c.AddPolicy("myPolicy",b=>b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
-            services.AddDbContext<MyContext>(options =>
+            services.AddDbContext<GetYourCarFixedDbContext>(options =>
                      options.UseSqlServer(Configuration.GetValue<string>("ConnectionString")));
         
             services.AddControllers();
