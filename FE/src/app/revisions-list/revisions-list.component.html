@@ -1,0 +1,15 @@
+<h1>List of available revisions:</h1>
+<ngb-accordion>    
+    <ngb-panel *ngFor="let revision of revisions">
+        <ng-template ngbPanelTitle>
+            {{revision.title}}
+        </ng-template>
+        <ng-template ngbPanelContent>
+            <p>Problem details: {{revision.problemDetails}}</p>
+            <p>Brand name: {{revision.brandName}}</p>
+            <p>Model name: {{revision.modelName}}</p>
+            <p>Plate number: {{revision.plateNumber}}</p>
+            <p>Registration id: {{revision.registrationId}}</p>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>
