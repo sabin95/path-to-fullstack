@@ -1,12 +1,16 @@
-namespace BE.DAL
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BE.BL.Clients.Create
 {
-    public class Client
+    public class CreateClientCommand
     {
-        public long ClientId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string Mail { get; set; }
         public string Password { get; set; }
+
     }
 }

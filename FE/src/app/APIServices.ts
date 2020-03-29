@@ -4,6 +4,7 @@ import { GetCarResult } from './revision/GetCarResult';
 import { CreateRevisionCommand } from './revision/CreateRevisionCommand';
 import { CreateCarCommand } from './car-insert/CreateCarCommand';
 import { GetRevisionResult } from './revisions-list/GetRevisionResult';
+import { CreateClientCommand } from './create-client/CreateClientCommand';
 
 @Injectable()
 export class APIService {
@@ -25,6 +26,11 @@ export class APIService {
     async createCar(clientId:number,carCommand:CreateCarCommand)
     {
         await this.httpClient.post(`http://localhost:5000/api/clients/${clientId}/Cars`, carCommand).toPromise();
+    }
+
+    async createClient(clientCommand:CreateClientCommand)
+    {
+        await this.httpClient.post(`http://localhost:5000/api/clients/`,clientCommand).toPromise();
     }
 
     async getRevisionsList(clientId:number)

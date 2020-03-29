@@ -14,6 +14,7 @@ using BE.Queries.Cars;
 using BE.BL.Cars.Create;
 using BE.BL.Cars.Edit;
 using BE.Queries.Revisions.GetAllRevisionsByClientId;
+using BE.Queries.Clients.GetClientResult;
 
 namespace BE
 {
@@ -29,6 +30,7 @@ namespace BE
             modelBuilder.Entity<GetRevisionResult>().HasNoKey();            
             modelBuilder.Entity<GetAllCarsForClientResult>().HasNoKey();
             modelBuilder.Entity<GetCarResult>().HasNoKey();
+            modelBuilder.Entity<GetClientResult>().HasNoKey();
         }
     }
 

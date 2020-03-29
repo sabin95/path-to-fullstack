@@ -2,8 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using BE.BL.Cars.Create;
 using BE.BL.Cars.Edit;
+using BE.BL.Clients.Create;
+using BE.BL.Clients.Edit;
 using BE.BL.Revisions.Create;
 using BE.Queries.Cars;
+using BE.Queries.Clients.GetClientResult;
 using BE.Queries.Revisions.GetAllRevisionsByClientId;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +20,12 @@ namespace BE.Controllers
         public ClientsController(GetYourCarFixedDbContext context)
         {
             _context = context;
+        }
+
+        [HttpGet("{clientId}")]
+        public GetClientResult GetClient(long clientId)
+        {
+            return _context.Set<GetClientResult>().FromSqlRaw("EXEC [dbo].[usp_GetClient] {0}", clientId).ToList().FirstOrDefault();
         }
 
         [HttpGet("{clientId}/{carId}")]
@@ -54,6 +63,13 @@ namespace BE.Controllers
             _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertRevision] {0}, {1},{2},{3}", revisionCreateCommand.Title, revisionCreateCommand.ProblemDetails, revisionCreateCommand.CarId, clientId);
         }
 
+        [HttpPost]
+        public void RegisterClient([FromBody] CreateClientCommand createClientCommand)
+        {
+            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertClient] {0}, {1},{2},{3},{4}", createClientCommand.FirstName, createClientCommand.LastName, createClientCommand.PhoneNumber,
+                                                                                    createClientCommand.Mail,createClientCommand.Password);
+        }
+
 
         [HttpPut("{clientId}/{carId}")]
         public void EditCar(long clientId,long carId,[FromBody] EditCarCommand carEditByIdCommand)
@@ -64,7 +80,18 @@ namespace BE.Controllers
                                                 carEditByIdCommand.RegistrationId);
         }
 
-        
+        [HttpPut("{clientId}")]
+        public void EditClient(long clientId,[FromBody] EditClientCommand editClientCommand)
+        {
+            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_Edit_Client] {0}, {1},{2},{3},{4},{5}", clientId,editClientCommand.FirstName, editClientCommand.LastName, editClientCommand.PhoneNumber,
+                                                                                editClientCommand.Mail,editClientCommand.Password);
+        }
+
+        [HttpDelete("{clientId}")]
+        public void DeleteClient(long clientId)
+        {
+            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_DeleteClient] {0}", clientId);
+        }
 
         [HttpDelete("{clientId}/{carId}")]
         public void DeleteCarById(long clientId,long carId)

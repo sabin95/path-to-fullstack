@@ -1,8 +1,11 @@
-namespace BE.DAL
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BE.BL.Clients.Edit
 {
-    public class Client
+    public class EditClientCommand
     {
-        public long ClientId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
