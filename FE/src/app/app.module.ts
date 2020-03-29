@@ -12,7 +12,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CarInsertComponent } from './car-insert/car-insert.component';
 import { APIService } from './APIServices';
 import { CreateClientComponent } from './create-client/create-client.component';
-import { ClientProfileComponent } from './client-profile/client-profile.component';
 
 @NgModule({
   declarations: [
