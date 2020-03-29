@@ -19,8 +19,7 @@ import { CreateClientComponent } from './create-client/create-client.component';
     AppComponent,
     RevisionsListComponent,
     CarInsertComponent,
-    CreateClientComponent,
-    ClientProfileComponent
+    CreateClientComponent
   ],
   imports: [
     BrowserModule,
