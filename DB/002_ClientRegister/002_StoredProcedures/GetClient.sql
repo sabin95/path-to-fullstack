@@ -7,7 +7,7 @@ BEGIN
     FirstName,
     LastName,
     PhoneNumber,
-    Mail
+    Email
     FROM [dbo].Clients
     WHERE Id=@Id
 END

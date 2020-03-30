@@ -4,6 +4,6 @@ CREATE TABLE dbo.Clients
     FirstName           VARCHAR(255),
     LastName            VARCHAR(255),
     PhoneNumber         VARCHAR(255),
-    Mail                VARCHAR(255) NOT NULL UNIQUE,
+    Email                VARCHAR(255) NOT NULL UNIQUE,
     Password            VARCHAR(255)
 )

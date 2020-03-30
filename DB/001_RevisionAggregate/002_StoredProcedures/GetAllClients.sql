@@ -4,6 +4,7 @@ BEGIN
         Id,
         FirstName,
         LastName,
-        PhoneNumber
+        PhoneNumber,
+        Email
     FROM dbo.Clients
 END

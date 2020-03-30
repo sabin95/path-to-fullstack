@@ -67,7 +67,7 @@ namespace BE.Controllers
         public void RegisterClient([FromBody] CreateClientCommand createClientCommand)
         {
             _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertClient] {0}, {1},{2},{3},{4}", createClientCommand.FirstName, createClientCommand.LastName, createClientCommand.PhoneNumber,
-                                                                                    createClientCommand.Mail,createClientCommand.Password);
+                                                                                    createClientCommand.Email,createClientCommand.Password);
         }
 
 
@@ -84,7 +84,7 @@ namespace BE.Controllers
         public void EditClient(long clientId,[FromBody] EditClientCommand editClientCommand)
         {
             _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_Edit_Client] {0}, {1},{2},{3},{4},{5}", clientId,editClientCommand.FirstName, editClientCommand.LastName, editClientCommand.PhoneNumber,
-                                                                                editClientCommand.Mail,editClientCommand.Password);
+                                                                                editClientCommand.Email, editClientCommand.Password);
         }
 
         [HttpDelete("{clientId}")]

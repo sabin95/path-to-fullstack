@@ -12,7 +12,7 @@ export class CreateClientComponent implements OnInit {
 firstName:string;
 lastName:string;
 phoneNumber:string;
-mail:string;
+email:string;
 password:string;
 client:CreateClientCommand;
   constructor(
@@ -27,7 +27,7 @@ client:CreateClientCommand;
       firstName:this.firstName,
       lastName:this.lastName,
       phoneNumber:this.phoneNumber,
-      mail:this.mail,
+      email:this.email,
       password:this.password
     }
     await this.ApiService.createClient(client);

@@ -3,7 +3,7 @@ CREATE OR ALTER PROCEDURE usp_EditClient
     @FirstName VARCHAR(255), 
     @LastName VARCHAR(255), 
     @PhoneNumber VARCHAR(255),
-    @Mail VARCHAR(255),
+    @Email VARCHAR(255),
     @Password VARCHAR(255)
 AS
 BEGIN
@@ -11,7 +11,7 @@ BEGIN
     SET [FirstName] = @FirstName,
     [LastName] = @LastName,
     [PhoneNumber] = @PhoneNumber,
-    [Mail] = @Mail,
+    [Email] = @Email,
     [Password] = @Password
     where Id=@Id
 END
