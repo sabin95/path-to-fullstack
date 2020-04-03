@@ -26,7 +26,8 @@ export class APIService {
 
     async createCar(clientId:number,carCommand:CreateCarCommand)
     {
-        await this.httpClient.post(`http://localhost:5000/api/clients/${clientId}/Cars`, carCommand).toPromise();
+        carCommand.clientId=clientId;
+        await this.httpClient.post(`http://localhost:5000/api/clients/cars`, carCommand).toPromise();
     }
 
     async createClient(clientCommand:CreateClientCommand)
