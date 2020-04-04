@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BE.Controllers
 {
     [Route("api/[controller]")]
-    public class ClientsController
+    public class ClientsController : Controller
     {
         private readonly IClientsReadRepository _clientReadRepository;
         private readonly IClientsWriteRepository _clientsWriteRepository;
@@ -25,106 +25,171 @@ namespace BE.Controllers
         }
 
         [HttpGet("{clientId}")]
-        public GetClientResult GetClient(long clientId)
+        public IActionResult GetClient(long clientId)
         {
-            return _clientReadRepository.GetClient(clientId);
+            if(clientId <0)
+            {
+                return BadRequest();
+            }            
+            return Ok(_clientReadRepository.GetClient(clientId));
         }
 
         [HttpGet("{clientId}/cars/{carId}")]
-        public GetCarResult GetCarById(long clientId,long carId)
+        public IActionResult GetCarById(long clientId,long carId)
         {
-            return _clientReadRepository.GetClientCar(clientId, carId);
+            if (clientId < 0 || carId<0)
+            {
+                return BadRequest();
+            }            
+            return Ok(_clientReadRepository.GetClientCar(clientId, carId));
         } 
 
         [HttpGet("{clientId}/cars")]
-        public List<GetAllCarsForClientResult> GetAllCarsByClientId(long clientId)
+        public IActionResult GetAllCarsByClientId(long clientId)
         {
-            return _clientReadRepository.GetClientCars(clientId);
+            if(clientId<0)
+            {
+                return BadRequest();
+            }
+            return Ok(_clientReadRepository.GetClientCars(clientId));
         }
 
         [HttpGet("{clientId}/revisions")]
-        public List<GetRevisionsForClientResult> GetAllRevisionsByClientId(long clientId)
+        public IActionResult GetAllRevisionsByClientId(long clientId)
         {
-            return _clientReadRepository.GetClientRevisions(clientId);
+            if (clientId < 0)
+            {
+                return BadRequest();
+            }
+            return Ok(_clientReadRepository.GetClientRevisions(clientId));
         }
 
         [HttpGet("{clientId}/revisions/{revisionId}")]
-        public GetRevisionResult GetRevisionById(long clientId,long revisionId)
+        public IActionResult GetRevisionById(long clientId,long revisionId)
         {
-            return _clientReadRepository.GetClientRevision(clientId, revisionId);
+            if (clientId < 0 || revisionId<0)
+            {
+                return BadRequest();
+            }
+            return Ok(_clientReadRepository.GetClientRevision(clientId, revisionId));
         }
 
         [HttpPost("cars")]
-        public void AddCar([FromBody] CreateCarCommand carCreateCommand)
+        public IActionResult AddCar([FromBody] CreateCarCommand carCreateCommand)
         {
+            if(carCreateCommand is null)
+            {
+                return BadRequest();
+            }
             var client = _clientAggregateFactory.Create(carCreateCommand.ClientId);
             client.AddCar(carCreateCommand);
             _clientsWriteRepository.Save(client);
+            return Ok();
         }
 
         [HttpPost("revisions")]
-        public void AddRevision([FromBody] CreateRevisionCommand revisionCreateCommand)
+        public IActionResult AddRevision([FromBody] CreateRevisionCommand revisionCreateCommand)
         {
+            if (revisionCreateCommand is null)
+            {
+                return BadRequest();
+            }
             var client = _clientAggregateFactory.Create(revisionCreateCommand.ClientId);
             client.AddRevision(revisionCreateCommand);
             _clientsWriteRepository.Save(client);
+            return Ok();
         }
 
         [HttpPost]
-        public void RegisterClient([FromBody] CreateClientCommand createClientCommand)
+        public IActionResult RegisterClient([FromBody] CreateClientCommand createClientCommand)
         {
+            if (createClientCommand is null)
+            {
+                return BadRequest();
+            }
             var client = _clientAggregateFactory.Create(createClientCommand);
             _clientsWriteRepository.Save(client);
+            return Ok();
         }
 
 
         [HttpPut]
-        public void EditClient([FromBody] EditClientCommand editClientCommand)
+        public IActionResult EditClient([FromBody] EditClientCommand editClientCommand)
         {
+            if (editClientCommand is null)
+            {
+                return BadRequest();
+            }
             var client = _clientAggregateFactory.Create(editClientCommand.Id);
             client.Edit(editClientCommand);
             _clientsWriteRepository.Save(client);
+            return Ok();
         }
 
 
         [HttpPut("cars")]
-        public void EditCar([FromBody] EditCarCommand carEditByIdCommand)
+        public IActionResult EditCar([FromBody] EditCarCommand carEditByIdCommand)
         {
+            if (carEditByIdCommand is null)
+            {
+                return BadRequest();
+            }
             var client = _clientAggregateFactory.Create(carEditByIdCommand.ClientId);
             client.EditCar(carEditByIdCommand);
             _clientsWriteRepository.Save(client);
+            return Ok();
         }
 
         [HttpPut("revisions")]
-        public void EditRevision([FromBody] EditRevisionCommand revisionEditCommand)
+        public IActionResult EditRevision([FromBody] EditRevisionCommand revisionEditCommand)
         {
+            if (revisionEditCommand is null)
+            {
+                return BadRequest();
+            }
             var client = _clientAggregateFactory.Create(revisionEditCommand.ClientId);
             client.EditRevision(revisionEditCommand);
             _clientsWriteRepository.Save(client);
+            return Ok();
         }
 
         [HttpDelete("{clientId}")]
-        public void DeleteClient(long clientId)
+        public IActionResult DeleteClient(long clientId)
         {
+            if (clientId <0)
+            {
+                return BadRequest();
+            }
             var client = _clientAggregateFactory.Create(clientId);
             client.Delete();
             _clientsWriteRepository.Save(client);
+            return Ok();
         }
 
         [HttpDelete("{clientId}/cars/{carId}")]
-        public void DeleteCar(long clientId,long carId)
+        public IActionResult DeleteCar(long clientId,long carId)
         {
+            if (clientId < 0 || carId<0)
+            {
+                return BadRequest();
+            }
             var client = _clientAggregateFactory.Create(clientId);
             client.DeleteCar(carId);
             _clientsWriteRepository.Save(client);
+            return Ok();
         }
 
         [HttpDelete("{clientId}/revisions/{revisionId}")]
-        public void DeleteRevision(long clientId, long revisionId)
+        public IActionResult DeleteRevision(long clientId, long revisionId)
         {
+            if (clientId < 0 || revisionId < 0)
+            {
+                return BadRequest();
+            }
             var client = _clientAggregateFactory.Create(clientId);
             client.DeleteRevision(revisionId);
             _clientsWriteRepository.Save(client);
+            return Ok();
         }
     }
 }

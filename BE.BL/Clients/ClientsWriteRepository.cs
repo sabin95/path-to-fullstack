@@ -33,7 +33,7 @@ namespace BE.BL.Clients
             {
                 Delete(client);
             }
-            else
+            else if (client.IsModified)
             {
                 Edit(client);
             }

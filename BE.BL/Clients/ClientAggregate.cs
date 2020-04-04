@@ -14,7 +14,8 @@ namespace BE.BL.Clients
         public string PhoneNumber { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
-        public bool IsDeleted { get; private set; } 
+        public bool IsDeleted { get; private set; }
+        public bool IsModified { get; private set; }
         public List<Car> Cars { get; private set; }
         public List<Revision> Revisions { get; private set; } 
 
@@ -43,6 +44,7 @@ namespace BE.BL.Clients
             PhoneNumber = editClientCommand.PhoneNumber;
             Email = editClientCommand.Email;
             Password = editClientCommand.Password;
+            IsModified = true;
         }
 
         public void Delete()

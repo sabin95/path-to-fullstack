@@ -5,7 +5,7 @@
     <UserSecretsId>9c0f0207-84a3-4911-9ba5-c31596c3c354</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE.Queries\BE.Queries.csproj" />
