@@ -1,10 +1,8 @@
-using System.Collections.Generic;
+using System;
 using BE.BL.Clients;
 using BE.BL.Clients.Cars;
 using BE.BL.Clients.Revisions;
 using BE.Queries.Clients;
-using BE.Queries.Clients.Cars;
-using BE.Queries.Clients.Revisions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BE.Controllers
@@ -27,169 +25,216 @@ namespace BE.Controllers
         [HttpGet("{clientId}")]
         public IActionResult GetClient(long clientId)
         {
-            if(clientId <0)
+            try
             {
-                return BadRequest();
-            }            
-            return Ok(_clientReadRepository.GetClient(clientId));
+                var client = _clientReadRepository.GetClient(clientId);
+                return Ok(client);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }         
         }
 
         [HttpGet("{clientId}/cars/{carId}")]
-        public IActionResult GetCarById(long clientId,long carId)
+        public IActionResult GetClientCar(long clientId,long carId)
         {
-            if (clientId < 0 || carId<0)
+            try
             {
-                return BadRequest();
-            }            
-            return Ok(_clientReadRepository.GetClientCar(clientId, carId));
+                var clientCar = _clientReadRepository.GetClientCar(clientId, carId);
+                return Ok(clientCar);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         } 
 
         [HttpGet("{clientId}/cars")]
-        public IActionResult GetAllCarsByClientId(long clientId)
+        public IActionResult GetClientCars(long clientId)
         {
-            if(clientId<0)
+            try
             {
-                return BadRequest();
+                var clientCars = _clientReadRepository.GetClientCars(clientId);
+                return Ok(clientCars);
             }
-            return Ok(_clientReadRepository.GetClientCars(clientId));
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{clientId}/revisions")]
-        public IActionResult GetAllRevisionsByClientId(long clientId)
+        public IActionResult GetClientRevisions(long clientId)
         {
-            if (clientId < 0)
+            try
             {
-                return BadRequest();
+                var clientRevisions = _clientReadRepository.GetClientRevisions(clientId);
+                return Ok(clientRevisions);
             }
-            return Ok(_clientReadRepository.GetClientRevisions(clientId));
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{clientId}/revisions/{revisionId}")]
-        public IActionResult GetRevisionById(long clientId,long revisionId)
+        public IActionResult GetClientRevision(long clientId,long revisionId)
         {
-            if (clientId < 0 || revisionId<0)
+            try
             {
-                return BadRequest();
+                var clientRevision = _clientReadRepository.GetClientRevision(clientId, revisionId);
+                return Ok(clientRevision);
             }
-            return Ok(_clientReadRepository.GetClientRevision(clientId, revisionId));
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("cars")]
         public IActionResult AddCar([FromBody] CreateCarCommand carCreateCommand)
         {
-            if(carCreateCommand is null)
+            try
             {
-                return BadRequest();
+                var client = _clientAggregateFactory.Create(carCreateCommand.ClientId);
+                client.AddCar(carCreateCommand);
+                _clientsWriteRepository.Save(client);
+                return Ok();
             }
-            var client = _clientAggregateFactory.Create(carCreateCommand.ClientId);
-            client.AddCar(carCreateCommand);
-            _clientsWriteRepository.Save(client);
-            return Ok();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("revisions")]
         public IActionResult AddRevision([FromBody] CreateRevisionCommand revisionCreateCommand)
         {
-            if (revisionCreateCommand is null)
+            try
             {
-                return BadRequest();
+                var client = _clientAggregateFactory.Create(revisionCreateCommand.ClientId);
+                client.AddRevision(revisionCreateCommand);
+                _clientsWriteRepository.Save(client);
+                return Ok();
             }
-            var client = _clientAggregateFactory.Create(revisionCreateCommand.ClientId);
-            client.AddRevision(revisionCreateCommand);
-            _clientsWriteRepository.Save(client);
-            return Ok();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         public IActionResult RegisterClient([FromBody] CreateClientCommand createClientCommand)
         {
-            if (createClientCommand is null)
+            try
             {
-                return BadRequest();
+                var client = _clientAggregateFactory.Create(createClientCommand);
+                _clientsWriteRepository.Save(client);
+                return Ok();
             }
-            var client = _clientAggregateFactory.Create(createClientCommand);
-            _clientsWriteRepository.Save(client);
-            return Ok();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
         [HttpPut]
         public IActionResult EditClient([FromBody] EditClientCommand editClientCommand)
         {
-            if (editClientCommand is null)
+            try
             {
-                return BadRequest();
+                var client = _clientAggregateFactory.Create(editClientCommand.Id);
+                client.Edit(editClientCommand);
+                _clientsWriteRepository.Save(client);
+                return Ok();
             }
-            var client = _clientAggregateFactory.Create(editClientCommand.Id);
-            client.Edit(editClientCommand);
-            _clientsWriteRepository.Save(client);
-            return Ok();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
         [HttpPut("cars")]
         public IActionResult EditCar([FromBody] EditCarCommand carEditByIdCommand)
         {
-            if (carEditByIdCommand is null)
+            try
             {
-                return BadRequest();
+                var client = _clientAggregateFactory.Create(carEditByIdCommand.ClientId);
+                client.EditCar(carEditByIdCommand);
+                _clientsWriteRepository.Save(client);
+                return Ok();
             }
-            var client = _clientAggregateFactory.Create(carEditByIdCommand.ClientId);
-            client.EditCar(carEditByIdCommand);
-            _clientsWriteRepository.Save(client);
-            return Ok();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("revisions")]
         public IActionResult EditRevision([FromBody] EditRevisionCommand revisionEditCommand)
         {
-            if (revisionEditCommand is null)
+            try
             {
-                return BadRequest();
+                var client = _clientAggregateFactory.Create(revisionEditCommand.ClientId);
+                client.EditRevision(revisionEditCommand);
+                _clientsWriteRepository.Save(client);
+                return Ok();
             }
-            var client = _clientAggregateFactory.Create(revisionEditCommand.ClientId);
-            client.EditRevision(revisionEditCommand);
-            _clientsWriteRepository.Save(client);
-            return Ok();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{clientId}")]
         public IActionResult DeleteClient(long clientId)
         {
-            if (clientId <0)
+            try
             {
-                return BadRequest();
+                var client = _clientAggregateFactory.Create(clientId);
+                client.Delete();
+                _clientsWriteRepository.Save(client);
+                return Ok();
             }
-            var client = _clientAggregateFactory.Create(clientId);
-            client.Delete();
-            _clientsWriteRepository.Save(client);
-            return Ok();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{clientId}/cars/{carId}")]
         public IActionResult DeleteCar(long clientId,long carId)
         {
-            if (clientId < 0 || carId<0)
+            try
             {
-                return BadRequest();
+                var client = _clientAggregateFactory.Create(clientId);
+                client.DeleteCar(carId);
+                _clientsWriteRepository.Save(client);
+                return Ok();
             }
-            var client = _clientAggregateFactory.Create(clientId);
-            client.DeleteCar(carId);
-            _clientsWriteRepository.Save(client);
-            return Ok();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{clientId}/revisions/{revisionId}")]
         public IActionResult DeleteRevision(long clientId, long revisionId)
         {
-            if (clientId < 0 || revisionId < 0)
+            try
             {
-                return BadRequest();
+                var client = _clientAggregateFactory.Create(clientId);
+                client.DeleteRevision(revisionId);
+                _clientsWriteRepository.Save(client);
+                return Ok();
             }
-            var client = _clientAggregateFactory.Create(clientId);
-            client.DeleteRevision(revisionId);
-            _clientsWriteRepository.Save(client);
-            return Ok();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

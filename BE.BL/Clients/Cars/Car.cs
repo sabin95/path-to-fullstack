@@ -1,4 +1,6 @@
-﻿namespace BE.BL.Clients.Cars
+﻿using System;
+
+namespace BE.BL.Clients.Cars
 {
     public class Car
     {
@@ -28,6 +30,10 @@
 
         public void Edit(EditCarCommand editCarCommand)
         {
+            if (editCarCommand is null)
+            {
+                throw new ArgumentNullException(nameof(editCarCommand), "Input was null!");
+            }
             IsModified = true;
             BrandName = editCarCommand.BrandName;
             ModelName = editCarCommand.ModelName;

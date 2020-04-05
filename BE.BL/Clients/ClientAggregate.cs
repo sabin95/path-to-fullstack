@@ -39,6 +39,10 @@ namespace BE.BL.Clients
 
         public void Edit(EditClientCommand editClientCommand)
         {
+            if (editClientCommand is null)
+            {
+                throw new ArgumentNullException();
+            }
             FirstName = editClientCommand.FirstName;
             LastName = editClientCommand.LastName;
             PhoneNumber = editClientCommand.PhoneNumber;
@@ -54,37 +58,69 @@ namespace BE.BL.Clients
 
         public void AddCar(CreateCarCommand createCarCommand)
         {
+            if (createCarCommand is null)
+            {
+                throw new ArgumentNullException(nameof(createCarCommand), "Input was null!");
+            }
             Cars.Add(new Car(createCarCommand.ClientId,createCarCommand.BrandName,createCarCommand.ModelName,
                             createCarCommand.PlateNumber,createCarCommand.RegistrationId));
         }
 
         public void EditCar(EditCarCommand editCarCommand)
         {
+            if (editCarCommand is null)
+            {
+                throw new ArgumentNullException(nameof(editCarCommand), "Input was null!");
+            }
             var car = Cars.FirstOrDefault(x => x.Id == editCarCommand.Id);
+            if(car is null)
+            {
+                throw new ArgumentException(nameof(car),"No car with this id was found!");
+            }
             car.Edit(editCarCommand);
         }
 
         public void DeleteCar(long carId)
         {
             var car = Cars.FirstOrDefault(x => x.Id == carId);
+            if (car is null)
+            {
+                throw new ArgumentException(nameof(car), "No car with this id was found!");
+            }
             car.Delete();    
         }
 
         public void AddRevision(CreateRevisionCommand createRevisionCommand)
         {
+            if (createRevisionCommand is null)
+            {
+                throw new ArgumentNullException(nameof(createRevisionCommand), "Input was null!");
+            }
             Revisions.Add(new Revision(createRevisionCommand.ClientId, createRevisionCommand.CarId,
                                        createRevisionCommand.Title, createRevisionCommand.ProblemDetails));
         }
 
         public void EditRevision(EditRevisionCommand editRevisionCommand)
         {
+            if (editRevisionCommand is null)
+            {
+                throw new ArgumentNullException(nameof(editRevisionCommand), "Input was null!");
+            }
             var revision = Revisions.FirstOrDefault(x => x.Id == editRevisionCommand.Id);
+            if (revision is null)
+            {
+                throw new ArgumentException(nameof(revision), "No revision with this id was found!");
+            }
             revision.Edit(editRevisionCommand);
         }
 
         public void DeleteRevision(long id)
         {
             var revision = Revisions.FirstOrDefault(x => x.Id == id);
+            if (revision is null)
+            {
+                throw new ArgumentException(revision.ToString(), "No revision with this id was found!");
+            }
             revision.Delete();
         }
 

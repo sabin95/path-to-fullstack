@@ -1,4 +1,6 @@
-﻿namespace BE.BL.Clients.Revisions
+﻿using System;
+
+namespace BE.BL.Clients.Revisions
 {
     public class Revision
     {
@@ -27,6 +29,10 @@
 
         public void Edit(EditRevisionCommand editRevisionCommand)
         {
+            if (editRevisionCommand is null)
+            {
+                throw new ArgumentNullException(nameof(editRevisionCommand),"Input was null!");
+            }
             IsModified = true;
             Title = editRevisionCommand.Title;
             ProblemDetails = editRevisionCommand.ProblemDetails;
