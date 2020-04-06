@@ -1,0 +1,9 @@
+CREATE TYPE UT_EditClient AS TABLE  
+(  
+Id         BIGINT NOT NULL,
+FirstName VARCHAR(255) NOT NULL,  
+LastName VARCHAR(255) NOT NULL,  
+PhoneNumber VARCHAR(255) NOT NULL,  
+Email VARCHAR(255) NOT NULL,  
+Password VARCHAR(255) NOT NULL 
+) 

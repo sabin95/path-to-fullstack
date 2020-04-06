@@ -1,0 +1,31 @@
+<ngb-accordion>    
+    <ngb-panel [(ngModel)]="client" ngDefaultControl>
+        <ng-template ngbPanelTitle>
+            {{client.firstName}} {{client.lastName}}
+        </ng-template>
+                
+        <ng-template ngbPanelContent>
+            <ngb-accordion>
+                <ngb-panel title="Account Details">
+                    <ng-template ngbPanelContent>
+                        <p>Phone number: {{client.phoneNumber}}</p>
+                        <p>Mail: {{client.email}}</p>
+                    </ng-template>
+                </ngb-panel>
+            </ngb-accordion>
+            <ngb-accordion>
+                <ngb-panel *ngFor="let car of cars">
+                    <ng-template ngbPanelTitle>
+                        {{car.brandName}} {{car.modelName}}
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <p>Brand name: {{car.brandName}}</p>
+                        <p>Model name: {{car.modelName}}</p>
+                        <p>Plate number: {{car.plateNumber}}</p>
+                        <p>Registration id: {{car.registrationId}}</p>
+                    </ng-template>
+                </ngb-panel>
+            </ngb-accordion>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>

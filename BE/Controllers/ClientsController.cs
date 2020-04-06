@@ -1,81 +1,240 @@
-using System.Collections.Generic;
-using System.Linq;
-using BE.BL.Cars.Create;
-using BE.BL.Cars.Edit;
-using BE.BL.Revisions.Create;
-using BE.Queries.Cars;
-using BE.Queries.Revisions.GetAllRevisionsByClientId;
+using System;
+using BE.BL.Clients;
+using BE.BL.Clients.Cars;
+using BE.BL.Clients.Revisions;
+using BE.Queries.Clients;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BE.Controllers
 {
     [Route("api/[controller]")]
-    public class ClientsController
+    public class ClientsController : Controller
     {
-        private readonly GetYourCarFixedDbContext _context;
-        public ClientsController(GetYourCarFixedDbContext context)
+        private readonly IClientsReadRepository _clientReadRepository;
+        private readonly IClientsWriteRepository _clientsWriteRepository;
+        private readonly IClientAggregateFactory _clientAggregateFactory;
+
+        public ClientsController(IClientsReadRepository clientsReadContext, IClientsWriteRepository clientsWriteRepository,
+                                 IClientAggregateFactory clientAggregateFactory)
         {
-            _context = context;
+            _clientReadRepository = clientsReadContext;
+            _clientsWriteRepository = clientsWriteRepository;
+            _clientAggregateFactory = clientAggregateFactory;
         }
 
-        [HttpGet("{clientId}/{carId}")]
-        public GetCarResult GetCarById(long clientId,long carId)
+        [HttpGet("{clientId}")]
+        public IActionResult GetClient(long clientId)
         {
-            
-            return _context.Set<GetCarResult>().FromSqlRaw("EXEC [dbo].[usp_GetCarById] {0},{1}", carId,clientId).ToList().FirstOrDefault();            
+            try
+            {
+                var client = _clientReadRepository.GetClient(clientId);
+                return Ok(client);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }         
+        }
+
+        [HttpGet("{clientId}/cars/{carId}")]
+        public IActionResult GetClientCar(long clientId,long carId)
+        {
+            try
+            {
+                var clientCar = _clientReadRepository.GetClientCar(clientId, carId);
+                return Ok(clientCar);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         } 
 
         [HttpGet("{clientId}/cars")]
-        public List<GetAllCarsForClientResult> GetAllCarsByClientId(long clientId)
+        public IActionResult GetClientCars(long clientId)
         {
-            return _context.Set<GetAllCarsForClientResult>().FromSqlRaw("EXEC [dbo].[usp_GetAllCarsByClientId] {0}",clientId).ToList();            
+            try
+            {
+                var clientCars = _clientReadRepository.GetClientCars(clientId);
+                return Ok(clientCars);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{clientId}/revisions")]
-        public List<GetRevisionsForClientResult> GetAllRevisionsByClientId(long clientId)
+        public IActionResult GetClientRevisions(long clientId)
         {
-
-            return _context.Set<GetRevisionsForClientResult>().FromSqlRaw("EXEC [dbo].[usp_GetAllRevisionsByClientId] {0}", clientId).ToList();
+            try
+            {
+                var clientRevisions = _clientReadRepository.GetClientRevisions(clientId);
+                return Ok(clientRevisions);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpPost("{clientId}/cars")]
-        public void AddCar(long clientId,[FromBody] CreateCarCommand carCreateCommand)
+        [HttpGet("{clientId}/revisions/{revisionId}")]
+        public IActionResult GetClientRevision(long clientId,long revisionId)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertCar] {0},{1},{2},{3},{4}", 
-                                                clientId,carCreateCommand.BrandName,
-                                                carCreateCommand.ModelName,carCreateCommand.PlateNumber,
-                                                carCreateCommand.RegistrationId);
+            try
+            {
+                var clientRevision = _clientReadRepository.GetClientRevision(clientId, revisionId);
+                return Ok(clientRevision);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpPost("{clientId}/revisions")]
-        public void AddRevision([FromRoute] long clientId,[FromBody] CreateRevisionCommand revisionCreateCommand)
+        [HttpPost("cars")]
+        public IActionResult AddCar([FromBody] CreateCarCommand carCreateCommand)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_InsertRevision] {0}, {1},{2},{3}", revisionCreateCommand.Title, revisionCreateCommand.ProblemDetails, revisionCreateCommand.CarId, clientId);
+            try
+            {
+                var client = _clientAggregateFactory.Create(carCreateCommand.ClientId);
+                client.AddCar(carCreateCommand);
+                _clientsWriteRepository.Save(client);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("revisions")]
+        public IActionResult AddRevision([FromBody] CreateRevisionCommand revisionCreateCommand)
+        {
+            try
+            {
+                var client = _clientAggregateFactory.Create(revisionCreateCommand.ClientId);
+                client.AddRevision(revisionCreateCommand);
+                _clientsWriteRepository.Save(client);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult RegisterClient([FromBody] CreateClientCommand createClientCommand)
+        {
+            try
+            {
+                var client = _clientAggregateFactory.Create(createClientCommand);
+                _clientsWriteRepository.Save(client);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
-        [HttpPut("{clientId}/{carId}")]
-        public void EditCar(long clientId,long carId,[FromBody] EditCarCommand carEditByIdCommand)
+        [HttpPut]
+        public IActionResult EditClient([FromBody] EditClientCommand editClientCommand)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_EditCarById] {0},{1},{2},{3},{4},{5}", carId,
-                                                clientId,carEditByIdCommand.BrandName,
-                                                carEditByIdCommand.ModelName,carEditByIdCommand.PlateNumber,
-                                                carEditByIdCommand.RegistrationId);
+            try
+            {
+                var client = _clientAggregateFactory.Create(editClientCommand.Id);
+                client.Edit(editClientCommand);
+                _clientsWriteRepository.Save(client);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        
 
-        [HttpDelete("{clientId}/{carId}")]
-        public void DeleteCarById(long clientId,long carId)
+        [HttpPut("cars")]
+        public IActionResult EditCar([FromBody] EditCarCommand carEditByIdCommand)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_DeleteCarById] {0},{1}", carId,clientId);
+            try
+            {
+                var client = _clientAggregateFactory.Create(carEditByIdCommand.ClientId);
+                client.EditCar(carEditByIdCommand);
+                _clientsWriteRepository.Save(client);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpDelete("{clientId}/cars")]
-        public void DeleteCarByClientId(long clientId)
+        [HttpPut("revisions")]
+        public IActionResult EditRevision([FromBody] EditRevisionCommand revisionEditCommand)
         {
-            _context.Database.ExecuteSqlRaw("EXEC [dbo].[usp_DeleteCarsByClientId] {0}", clientId);
+            try
+            {
+                var client = _clientAggregateFactory.Create(revisionEditCommand.ClientId);
+                client.EditRevision(revisionEditCommand);
+                _clientsWriteRepository.Save(client);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{clientId}")]
+        public IActionResult DeleteClient(long clientId)
+        {
+            try
+            {
+                var client = _clientAggregateFactory.Create(clientId);
+                client.Delete();
+                _clientsWriteRepository.Save(client);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{clientId}/cars/{carId}")]
+        public IActionResult DeleteCar(long clientId,long carId)
+        {
+            try
+            {
+                var client = _clientAggregateFactory.Create(clientId);
+                client.DeleteCar(carId);
+                _clientsWriteRepository.Save(client);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{clientId}/revisions/{revisionId}")]
+        public IActionResult DeleteRevision(long clientId, long revisionId)
+        {
+            try
+            {
+                var client = _clientAggregateFactory.Create(clientId);
+                client.DeleteRevision(revisionId);
+                _clientsWriteRepository.Save(client);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
