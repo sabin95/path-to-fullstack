@@ -17,7 +17,7 @@ namespace BE.BL.Clients
 
         public ClientAggregate Create(CreateClientCommand createClientCommand)
         {
-            if (createClientCommand is null)
+            if (createClientCommand is null || string.IsNullOrWhiteSpace(createClientCommand.LastName))
             {
                 throw new ArgumentNullException(nameof(createClientCommand), "Input was null!");
             }

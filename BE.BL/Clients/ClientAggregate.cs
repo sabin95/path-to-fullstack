@@ -39,7 +39,7 @@ namespace BE.BL.Clients
 
         public void Edit(EditClientCommand editClientCommand)
         {
-            if (editClientCommand is null)
+            if (editClientCommand is null || string.IsNullOrWhiteSpace(editClientCommand.LastName))
             {
                 throw new ArgumentNullException();
             }
