@@ -41,7 +41,7 @@ namespace BE.BL.Clients
         {
             if (editClientCommand is null || string.IsNullOrWhiteSpace(editClientCommand.LastName))
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(editClientCommand), "Input was null!");
             }
             FirstName = editClientCommand.FirstName;
             LastName = editClientCommand.LastName;
@@ -119,7 +119,7 @@ namespace BE.BL.Clients
             var revision = Revisions.FirstOrDefault(x => x.Id == id);
             if (revision is null)
             {
-                throw new ArgumentException(revision.ToString(), "No revision with this id was found!");
+                throw new ArgumentException(nameof(revision), "No revision with this id was found!");
             }
             revision.Delete();
         }
