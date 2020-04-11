@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RunSqlFiles": {
+      "commandName": "Project",
+      "commandLineArgs": "\"Server=.;Database=GetYourCarFixed;User=sa;Password=Castor2!\" \"../../../../DB\""
+    }
+  }
+}
