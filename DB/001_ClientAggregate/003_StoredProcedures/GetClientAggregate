@@ -1,0 +1,27 @@
+CREATE OR ALTER PROCEDURE usp_GetClientAggregate
+    @ClientId BIGINT
+AS
+BEGIN
+    SELECT
+    c.Id as ClientId,
+    c.FirstName,
+    c.LastName,
+    c.PhoneNumber,
+    c.Email,
+    c.[Password],
+    cc.Id as CarId,
+    cc.BrandName,
+    cc.ModelName,
+    cc.PlateNumber,
+    cc.RegistrationId,
+    r.Id as RevisionId,
+    r.Title,
+    r.ProblemDetails
+    FROM Clients c
+    LEFT JOIN Cars cc
+    ON c.Id=cc.ClientId
+    LEFT JOIN Revisions r
+    ON c.Id = r.ClientId
+    AND cc.Id = r.CarId
+    WHERE c.Id=@ClientId
+END

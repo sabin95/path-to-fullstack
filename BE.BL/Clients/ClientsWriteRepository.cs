@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace BE.BL.Clients
 {
@@ -264,6 +265,11 @@ namespace BE.BL.Clients
                 TypeName = "dbo.UT_BIGINT"
             };
             _writeContext.Database.ExecuteSqlRaw("EXEC [dbo].[usp_DeleteRevision] {0}", new[] { parameter });
+        }
+
+        public List<GetClientAggregateResult> GetClientAggregate (long clientId)
+        {
+            return _writeContext.Set<GetClientAggregateResult>().FromSqlRaw("EXEC [dbo].[usp_GetClientAggregate] {0}", clientId).ToList();
         }
     }
 }
