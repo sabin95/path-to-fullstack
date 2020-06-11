@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BE.DAL
 {
@@ -9,6 +6,10 @@ namespace BE.DAL
     {
         public WriteGetYourCarFixedDbContext(DbContextOptions<WriteGetYourCarFixedDbContext> dbContextOptions) : base(dbContextOptions)
         {
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<GetClientAggregateResult>().HasNoKey();
         }
     }
 }
